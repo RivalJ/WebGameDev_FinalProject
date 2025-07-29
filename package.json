@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/RivalJ/WebGameDev_FinalProject/issues"
   },
-  "homepage": "https://github.com/RivalJ/WebGameDev_FinalProject#readme"
+  "homepage": "https://github.com/RivalJ/WebGameDev_FinalProject#readme",
+  "dependencies": {
+    "phaser": "^3.90.0"
+  }
 }

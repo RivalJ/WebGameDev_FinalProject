@@ -1,2 +1,10 @@
-# WebGameDev_FinalProject
+# WebGameDev\_FinalProject
+
 Final project repository for Web Game Development
+
+
+
+please make sure to run npm ci, NOT npm install.
+
+I repeat, run "npm cli" NOT "npm install".
+
