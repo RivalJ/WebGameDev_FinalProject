@@ -4,7 +4,7 @@ Final project repository for Web Game Development
 
 
 
-please make sure to run npm ci, NOT npm install.
+please make sure to run npm cli, NOT npm install.
 
 I repeat, run "npm cli" NOT "npm install".
 
