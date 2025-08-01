@@ -1,4 +1,4 @@
-console.log("hello from GameConfig!");
+const startButton = document.getElementById("startButton");
 
 
 //FIXME: get a better reference for how large the game will end up being
@@ -20,3 +20,5 @@ var config = {
 window.onload = function () {
   var game = new Phaser.Game(config);
 }
+
+startButton.addEventListener("click", GeoLocation.getLocation());
