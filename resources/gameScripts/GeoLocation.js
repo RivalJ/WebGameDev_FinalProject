@@ -22,16 +22,7 @@ class GeoLocation {
             console.log(error);
         });
 
-        
-        // const jsonResponse = await response.json();
-
-        // const stateAbbreviation = jsonResponse['plus_code']['compound_code'].split(",")[1].trim()
-        
-
-
-        // console.log(stateAbbreviation);
-
-        
+    
     };
 
     success(position) {
