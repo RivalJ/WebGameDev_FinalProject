@@ -1,7 +1,7 @@
 import { FireStoreDBCarrier } from "./FireBaseSetup.js";
 import { collection, doc, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-class DataBase {
+export class DataBase {
   constructor() {
     this.fireStoreInstance = new FireStoreDBCarrier();
     this.db = this.fireStoreInstance.db_fireStore; //gets the database from the firestore carrier
@@ -28,6 +28,43 @@ class DataBase {
         const dbCollection = collection(this.db, "highScores");//get our collection of data
 
         const dbDocRef = doc(dbCollection);//get our document reference
+
+        setDoc(dbDocRef, {
+          playerName: username,
+          playerScore: score
+        });//try to add the values to the document
+
+        console.log("score added to database");
+
+        this.updateScores();
+
+      } catch (error) {
+        console.error("score could not be added to database");
+        console.error(error);
+
+      }
+    } else {
+      console.warn(`attempted to add already existing score. \n name: ${username} \n score: ${score}`);
+    }
+  }
+
+  async uploadScoreToDB(score, username, entryToReplace) {
+    await this.dataReady; //wait for the data to be ready
+    var isNewScore = true; //is the entry a new one?
+
+    for (const entry of this.highScores) {//for each entry in our list of scores
+      if (entry.name == username && entry.score == score) { //if there is an exact copy
+        isNewScore = false; //we are not adding a new score
+        break;// exit the loop early, to save time and resources
+      }
+    }
+
+    if (isNewScore) {
+      try {
+        const dbCollection = collection(this.db, "highScores");//get our collection of data
+
+        const dbDocRef = doc(dbCollection, entryToReplace.id);//get our document reference
+        //^^ this version of the doc ref get's a specific one based on the ID of our entry to replace
 
         setDoc(dbDocRef, {
           playerName: username,
@@ -81,13 +118,3 @@ class DataBase {
     });
   }
 }
-
-const dbInstance = new DataBase();
-dbInstance.uploadScoreToDB(10, "Rival");
-dbInstance.uploadScoreToDB(999, "John Burger");
-dbInstance.uploadScoreToDB(120, "Jane Burger");
-dbInstance.uploadScoreToDB(400, "Evil Martian");
-dbInstance.uploadScoreToDB(345, "Not Evil Martian");
-//dbInstance.uploadScoreToDB(678, "Slightly Evil Martian");
-//dbInstance.uploadScoreToDB(893, "Steve, from Minecraft");
-dbInstance.printScoresToConsole();
