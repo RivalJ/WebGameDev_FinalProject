@@ -1,11 +1,3 @@
-//I think the main deal is to update the game background with the new background image based on the location name.
-/*
-    Questions: 
-        1. How does the GeoLocation api work?
-
-*/
-
-
 class GeoLocation {
 
     static #latitude;
@@ -13,18 +5,46 @@ class GeoLocation {
 
     
     
-    static async getLocation(){
-        // TODO: store as a Github Secret... If I can ?
-        navigator.geolocation.getCurrentPosition((position) =>{
-            GeoLocation.#latitude = position.coords.latitude;
-            GeoLocation.#longitude = position.coords.longitude;
+    async getLocation(){
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+        };
+        navigator.geolocation.getCurrentPosition(this.success, this.error);
+
+    
+        const response = await fetch("https://geolocationapi-hrbbd5crgdc2g9hx.centralus-01.azurewebsites.net/ReverseGeo/GetGeoLocation?latitude=" + GeoLocation.#latitude + "&longitude=" + GeoLocation.#longitude, requestOptions).catch(this.APIError);
+        
+        response.text().then((promise) =>{
+            console.log(promise)
+        })
+        .catch((error) => {
+            console.log(error);
         });
-        const response = await fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + GeoLocation.#latitude + "," + GeoLocation.#longitude + "&key=" + process.env.API_KEY);
-        const jsonResponse = await response.json();
+
         
-        console.log(jsonResponse);
+        // const jsonResponse = await response.json();
+
+        // const stateAbbreviation = jsonResponse['plus_code']['compound_code'].split(",")[1].trim()
         
+
+
+        // console.log(stateAbbreviation);
+
         
-    }
+    };
+
+    success(position) {
+        GeoLocation.#latitude = position.coords.latitude;
+        GeoLocation.#longitude = position.coords.longitude;
+    };
+
+    error() {
+        alert("No GeoLocation allowed.")
+
+    };
+    APIError() {
+        alert("Something failed with the Azure API")
+    };
 
 }
