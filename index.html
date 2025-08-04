@@ -7,7 +7,10 @@
 
 
         <!--
-            FIXME: look into adding webpack in the future
+            FIXME: look into 
+            
+            adding webpack in the future
+
             its not 100% required, but it could come in handy.
             Right now, all javascripts need to be loaded from the html
             and exactly in the right order, or things break. (not a good system)
@@ -16,7 +19,7 @@
 
             PHASER MUST BE LOADED FIRST
         -->
-        <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script> -->
 
 
         <!--
@@ -25,10 +28,10 @@
         <script type="text/javascript" src="./resources/gameScripts/scenes/LoadingScene.js"></script>
         <script type="text/javascript" src="./resources/gameScripts/scenes/GameScene.js"></script>
 
-
         <!--
             GAME CONFIG MUST BE LOADED LAST    
         -->
+        <script type="text/javascript" src="./resources/gameScripts/GeoLocation.js"></script>
         <script type="text/javascript" src="./resources/gameScripts/GameConfig.js"></script>
 
     </body>
