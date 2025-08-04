@@ -18,6 +18,12 @@ class GameScene extends Phaser.Scene {
     this.scoreBoard = null;
     this.burgers = [];
     this.playerScore = 0;
+    this.playerHealth = 3;
+    this.healthIndicator;
+
+    this.gameActive = true;
+    this.gameOver = false;
+    this.gameIdle = false;
   }
   preload() {
     this.scoreBoard = new ScoreBoard(this);
@@ -26,14 +32,18 @@ class GameScene extends Phaser.Scene {
   create() {
     this.playerScore = 0;
 
-    this.add.text(20, 20, "The game has loaded!");
+    this.healthIndicator = this.add.text(20, 20, this.playerHealth);
 
     this.events.on("damagePlayer", this.listener_onClickEvilBurger.bind(this));
     this.events.on("increaseScore", this.listener_onClickNormalBurger.bind(this));
   }
 
   update(time, delta) {
-    this.update_handleBurgers(time, delta);
+    if (this.playerHealth > 0) {
+      this.update_handleBurgers(time, delta);
+    } else {
+      //when player health reaches 0, delete all burgers and show the scoreboard, the player can then click to restart the game
+    }
   }
 
   //tolerance determines how close to the edge of the game area 
@@ -97,6 +107,8 @@ class GameScene extends Phaser.Scene {
 
   listener_onClickEvilBurger() {
     this.modifyPlayerScore(-15);
+    this.playerHealth--;
+    this.healthIndicator.setText(this.playerHealth);
   }
   listener_onClickNormalBurger() {
     this.modifyPlayerScore(15);
