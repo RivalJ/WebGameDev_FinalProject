@@ -33,34 +33,7 @@ class GameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-
-    //burger creation
-    if (this.burgers.length < 20) {
-
-      let randomPosition = this.getRandomPosition(8);
-
-      let burger = new Burger(this, randomPosition.x, randomPosition.y, true);
-
-      //burger.burgerSprite.setScale(0.10);
-
-      this.burgers.push(burger);
-
-    } else {
-      console.log("max number of burgers reached");//used for debugging
-    }
-
-
-    //burger state checking and updating
-    this.burgers.forEach((object, objectIndex) => {//for each object in burgers[]
-      object.update(time / 1000);
-
-      if (object.burgerSprite.scene == null) {
-        this.burgers.splice(objectIndex, 1);
-      }
-    });
-
-
-
+    this.update_handleBurgers(time, delta);
   }
 
   //tolerance determines how close to the edge of the game area 
@@ -85,8 +58,41 @@ class GameScene extends Phaser.Scene {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }//gets a random Int between the min and max input
   modifyPlayerScore(value) {
-    this.playerScore += value;
+    if (value < 0) {
+      if (this.playerScore > 0) {
+        this.playerScore += value;
+      }//ensures the player score does not go below 0
+    } else {
+      this.playerScore += value;
+    }
     console.log(`player score: ${this.playerScore}`);//used for debug
+  }
+
+  update_handleBurgers(time, delta) {
+    //burger creation
+    if (this.burgers.length < 20) {
+
+      let randomPosition = this.getRandomPosition(8);
+
+      let burger = new Burger(this, randomPosition.x, randomPosition.y, true);
+
+      //burger.burgerSprite.setScale(0.10);
+
+      this.burgers.push(burger);
+
+    } else {
+      console.log("max number of burgers reached");//used for debugging
+    }
+
+
+    //burger state checking and updating
+    this.burgers.forEach((object, objectIndex) => {//for each object in burgers[]
+      object.update(time / 1000);
+
+      if (object.burgerSprite.scene == null) {
+        this.burgers.splice(objectIndex, 1);
+      }
+    });
   }
 
   listener_onClickEvilBurger() {
