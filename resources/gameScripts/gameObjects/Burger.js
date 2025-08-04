@@ -1,5 +1,6 @@
-class Burger {
-    constructor(scene, x, y, isEvil = false) {
+class Burger extends Phaser.GameObjects.Sprite{
+  constructor(scene, x, y, isEvil = false) {
+      super(scene, x, y, null);
         this.scene = scene;
         this.x = x;
         this.y = y;

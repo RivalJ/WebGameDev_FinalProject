@@ -4,8 +4,7 @@ class GameScene extends Phaser.Scene {
     super("playGame");
   }
   preload() {
-    this.load.image("normalBurger", "resources/images/normalBurger.png");
-    this.load.image("evilBurger", "resources/images/evilBurger.png");
+    //load the score handler
   }
 
   create() {
@@ -14,6 +13,7 @@ class GameScene extends Phaser.Scene {
     this.burgers = [];
 
     // Example: create a burger at x=200, y=200
+
     this.burgers.push(new Burger(this, 200, 200, Math.random() > 0.5));
   }
 
