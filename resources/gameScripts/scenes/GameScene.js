@@ -15,12 +15,12 @@ class GameScene extends Phaser.Scene {
   constructor() {
     super("playGame");
 
-    this.scoreHandler = null;
+    this.scoreBoard = null;
     this.burgers = [];
     this.playerScore = 0;
   }
   preload() {
-    //load the score handler
+    this.scoreBoard = new ScoreBoard(this);
   }
 
   create() {

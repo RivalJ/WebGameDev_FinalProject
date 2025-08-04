@@ -7,41 +7,42 @@
 
 
         <!--
-            FIXME: look into adding webpack in the future
-            its not 100% required, but it could come in handy.
-            Right now, all javascripts need to be loaded from the html
-            and exactly in the right order, or things break. (not a good system)
-            But, its more important that we get the game made,
-            so this a thing to work on wayyyyyyyyyyyyy later
+        FIXME: look into adding webpack in the future
+        its not 100% required, but it could come in handy.
+        Right now, all javascripts need to be loaded from the html
+        and exactly in the right order, or things break. (not a good system)
+        But, its more important that we get the game made,
+        so this a thing to work on wayyyyyyyyyyyyy later
 
-            FIXME: look into 
-            adding webpack in the future
+        FIXME: look into
+        adding webpack in the future
 
-            its not 100% required, but it could come in handy.
-            Right now, all javascripts need to be loaded from the html
-            and exactly in the right order, or things break. (not a good system)
-            But, its more important that we get the game made,
-            so this a thing to work on wayyyyyyyyyyyyy later
+        its not 100% required, but it could come in handy.
+        Right now, all javascripts need to be loaded from the html
+        and exactly in the right order, or things break. (not a good system)
+        But, its more important that we get the game made,
+        so this a thing to work on wayyyyyyyyyyyyy later
 
-        PHASER MUST BE LOADED FIRST
-        -->
+    PHASER MUST BE LOADED FIRST
+    -->
         <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
         <script type="module" src="./resources/generalScripts/FireBaseSetup.js"></script>
 
         <!--
-        LOAD JAVASCRIPT HERE
-        -->
+    LOAD JAVASCRIPT HERE
+    -->
         <script type="module" src="./resources/generalScripts/DataBase.js"></script>
         <script type="text/javascript" src="./resources/gameScripts/ScoreHandler.js"></script>
 
         <script type="text/javascript" src="resources/gameScripts/gameObjects/Burger.js"></script>
+        <script type="text/javascript" src="resources/gameScripts/gameObjects/ScoreBoard.js"></script>
 
         <script type="text/javascript" src="./resources/gameScripts/scenes/LoadingScene.js"></script>
         <script type="text/javascript" src="./resources/gameScripts/scenes/GameScene.js"></script>
 
         <!--
-        GAME CONFIG MUST BE LOADED LAST
-        -->
+    GAME CONFIG MUST BE LOADED LAST
+    -->
         <script type="text/javascript" src="./resources/generalScripts/GeoLocation.js"></script>
         <script type="text/javascript" src="./resources/gameScripts/GameConfig.js"></script>
 

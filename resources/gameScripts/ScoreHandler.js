@@ -57,7 +57,7 @@ class ScoreHandler {
     }
   }
 
-  async DEBUG_test() {
+  async debug_test() {
     await this.dbLoaded;
 
     try {
@@ -79,9 +79,3 @@ class ScoreHandler {
 
   }
 }
-
-const scoreHandler = new ScoreHandler();
-
-scoreHandler.addScore(200, "Rival");
-
-scoreHandler.getScoreList();

@@ -1,0 +1,84 @@
+class ScoreBoard{
+  constructor(scene) {
+    this.scene = scene;
+    this.scoreHandler = null;
+
+    this.dimensions;
+    this.background;
+
+
+    this.create();
+  }
+  create() {
+    this.dimensions = this.getScoreBoardDimensions();
+    this.scoreHandler = new ScoreHandler();
+    this.debug_testScoreHandler();//FIXME: remove this when testing is done
+
+    this.openScoreBoard();
+  }
+
+  async openScoreBoard() {
+    this.drawBackground();
+
+    await this.scoreHandler.dbLoaded;//wait for the scorehandler to be ready
+    await this.scoreHandler.getScoreList();//wait for our score list to be ready
+
+    this.scoreHandler.scoreList.forEach((player, index) => {
+      this.drawLeftText(player.name, index);
+      this.drawRightText(player.score, index);
+    });
+  }
+
+  debug_testScoreHandler() {
+    this.scoreHandler.addScore(200, "Rival");
+    this.scoreHandler.getScoreList();
+  }
+  getScoreBoardDimensions() {
+    let topLeft = {
+      x: this.scene.scale.width / 5,
+      y: this.scene.scale.height / 15
+    }
+    let bottomRight = {
+      x: this.scene.scale.width - topLeft.x,
+      y: this.scene.scale.height - topLeft.y
+    }
+    let width = bottomRight.x - topLeft.x;
+    let height = bottomRight.y - topLeft.y;
+    return {
+      topLeft: topLeft,
+      bottomRight: bottomRight,
+      width: width,
+      height: height
+    }
+  }
+  drawBackground() {
+
+    this.background = this.scene.add.container(this.dimensions.topLeft.x, this.dimensions.topLeft.y);
+    let backgroundGraphic = this.scene.add.graphics();
+    backgroundGraphic.fillStyle(0x000000, 0.8);
+    backgroundGraphic.lineStyle(2, 0xFFFFFF, 1);
+    //setup the background
+
+    backgroundGraphic.fillRect(0, 0, this.dimensions.width, this.dimensions.height);
+    backgroundGraphic.strokeRect(0, 0, this.dimensions.width, this.dimensions.height);
+
+    this.background.add(backgroundGraphic);
+  }
+  drawLeftText(text, index) {
+    text = text.toString();
+    let fontSize = 24;
+    let currentTextSpacing = fontSize * (index * (fontSize/10));
+    let textObject = this.scene.add.text(fontSize, currentTextSpacing + fontSize, text);
+    textObject.setFontSize(fontSize);
+    this.background.add(textObject);
+  }
+  drawRightText(text, index) {
+    text = text.toString();
+    let fontSize = 24;
+    let currentTextSpacing = fontSize * (index * (fontSize / 10));
+    let stringSizeOffset = text.length * fontSize;
+    let textObject = this.scene.add.text(this.dimensions.width - stringSizeOffset, currentTextSpacing + fontSize, text);
+    textObject.setFontSize(fontSize);
+    this.background.add(textObject);
+  }
+}
