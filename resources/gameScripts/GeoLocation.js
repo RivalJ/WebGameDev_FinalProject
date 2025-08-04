@@ -12,7 +12,6 @@ class GeoLocation {
         };
         navigator.geolocation.getCurrentPosition(this.success, this.error);
 
-        // const response = await fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + GeoLocation.#latitude + "," + GeoLocation.#longitude + "&key=" + "AIzaSyA42eitwkkKFo9MxoWbV0U11fsIczGvaII");
         const response = await fetch("https://geolocationapi-hrbbd5crgdc2g9hx.centralus-01.azurewebsites.net/ReverseGeo/GetGeoLocation?latitude=" + GeoLocation.#latitude + "&longitude=" + GeoLocation.#longitude, requestOptions).catch(this.APIError);
         
         console.log(response.text)
@@ -20,8 +19,6 @@ class GeoLocation {
         const jsonResponse = await response.json();
 
         const stateAbbreviation = jsonResponse['plus_code']['compound_code'].split(",")[1].trim()
-        
-
 
         console.log(stateAbbreviation);
 
