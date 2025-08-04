@@ -28,6 +28,10 @@ class Burger extends Phaser.GameObjects.Sprite{
         // Enable click interaction
         this.burgerSprite.setInteractive();
         this.burgerSprite.on('pointerdown', () => this.onClick());
+
+      //FIXME: currently the scale is set to 0.1 because otherwise the images are too large
+      //someone will need to go in and edit the images to be something like 100 by 100 pixels in size, they should also be PNG images
+      this.burgerSprite.setScale(0.10);
     }
 
     update(deltaTime) {
@@ -43,11 +47,11 @@ class Burger extends Phaser.GameObjects.Sprite{
 
     onClick() {
         if (this.isEvil) {
-            console.log(" Evil burger clicked – player takes damage!");
-            // doDamage(); // placeholder
+          this.scene.events.emit("damagePlayer");
+
         } else {
-            console.log(" Normal burger clicked – score increased!");
-            // increaseScore(); // placeholder
+          this.scene.events.emit("increaseScore");
+
         }
 
         this.burgerSprite.destroy(); // remove burger from screen
