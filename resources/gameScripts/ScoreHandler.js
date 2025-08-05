@@ -10,10 +10,10 @@ class ScoreHandler {
   }
 
   async getImport() {
-    console.log("importing db class");
+    //console.log("importing db class");
     await import("../generalScripts/DataBase.js").then(module => {
       this.dbInstance = new module.DataBase();
-      console.log(this.dbInstance);
+      //console.log(this.dbInstance);
     }).catch(error => {
       console.error("database failed to import to scorehandler");
       console.error(error);
@@ -29,7 +29,7 @@ class ScoreHandler {
   async getScoreList() {
     this.scoreListLoaded = this.updateScoreList();
     await this.scoreListLoaded;
-    console.log(this.scoreList);
+    //console.log(this.scoreList);
   }
   async addScore(newScore, username) {
     await this.dbLoaded;
@@ -46,13 +46,18 @@ class ScoreHandler {
       const highestEntry = lowerThanNewScore.reduce((accumulator, currentValue) => {
         return currentValue.score > accumulator.score ? currentValue : accumulator;
       });
-      console.log(`the highest score that you beat is: ${highestEntry.score}`)
+      //console.log(`the highest score that you beat is: ${highestEntry.score}`)
 
       const entryToReplace = highestEntry;
-      this.dbInstance.uploadScoreToDB(newScore, username, entryToReplace);
+
+      if (this.scoreList.length < 10) {//if there are less than 10 scores, add a new one
+        this.dbInstance.uploadScoreToDB(newScore, username);
+      } else {//if there are 10 scores, replace one
+        this.dbInstance.uploadScoreToDB(newScore, username, entryToReplace);
+      }
 
     } else {
-      console.log("no highscore detected");
+     // console.log("no highscore detected");
 
     }
   }

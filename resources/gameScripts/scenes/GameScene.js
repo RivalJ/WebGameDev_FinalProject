@@ -1,5 +1,6 @@
 console.log("GameScene.js loaded from html");
 
+
 /*
   !!!!!!!!PLEASE READ!!!!!!!!
   pay attention to the text at the front of method names, these headings tell you about the intended use of the method.
@@ -21,6 +22,9 @@ class GameScene extends Phaser.Scene {
     this.playerHealth = 3;
     this.healthIndicator;
 
+    this.username = window.username;
+    // ^^ probs not the best way to do this, but we have deadlines, so if it works it works.
+
     this.gameActive = true;
     this.gameOver = false;
     this.gameIdle = false;
@@ -30,6 +34,7 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
+    console.log(this.username);//FIXME: delete when testing is done
     this.playerScore = 0;
 
     this.healthIndicator = this.add.text(20, 20, this.playerHealth);
@@ -50,12 +55,11 @@ class GameScene extends Phaser.Scene {
     }//toggle the game state based on player health
 
     if (this.gameOver) {
-      this.endGame();
-
-
       this.gameActive = false;
       this.gameOver = false;
       this.gameIdle = true;
+
+      this.endGame();
     }//toggle the game state to idle so that "gameover" only happens once
 
     if (this.gameActive) {
@@ -96,16 +100,23 @@ class GameScene extends Phaser.Scene {
     }
     console.log(`player score: ${this.playerScore}`);//used for debug
   }
-  endGame() {
-    this.burgers.forEach((object, objectIndex) => {
-      object.burgerSprite.destroy();
-    });//clear all burger sprites
-    this.burgers = [];//empty the array
-    this.scoreBoard.openScoreBoard();//open the scoreboard
-    this.input.once('pointerdown', function (pointer) {
-      this.scoreBoard.hideScoreBoard();
-      this.restartGame();
-    }, this);//when the player clicks, the game starts again
+  async endGame() {
+    if (!this.gameActive && this.gameIdle) {
+      this.burgers.forEach((object, objectIndex) => {
+        object.burgerSprite.destroy();
+      });//clear all burger sprites
+      this.burgers = [];//empty the array
+
+      await this.scoreBoard.scoreHandler.addScore(this.playerScore, this.username);
+
+      await this.scoreBoard.openScoreBoard();//open the scoreboard
+
+      this.input.once('pointerdown', function (pointer) {
+        this.scoreBoard.hideScoreBoard();
+        this.restartGame();
+      }, this);//when the player clicks, the game starts again
+
+    }//should prevent this method from accidentally being called more than once
   }
   restartGame() {
     this.playerHealth = 3;//reset player health

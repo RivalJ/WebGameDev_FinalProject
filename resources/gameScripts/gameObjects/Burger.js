@@ -22,7 +22,7 @@ class Burger extends Phaser.GameObjects.Sprite{
         this.burgerSprite.setOrigin(0.5);
 
         if (this.isEvil) {
-            this.evilTimer = 2; // seconds
+            this.evilTimer = 5; // seconds
         }
 
         // Enable click interaction
