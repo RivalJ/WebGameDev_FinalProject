@@ -108,14 +108,17 @@ class GameScene extends Phaser.Scene {
     }, this);//when the player clicks, the game starts again
   }
   restartGame() {
-    this.playerHealth = 3;
-    this.healthIndicator.setText(this.playerHealth);
-    this.playerScore = 0;
+    this.playerHealth = 3;//reset player health
+    this.healthIndicator.setText(this.playerHealth);//update the indicator
+    this.playerScore = 0;//reset player score
 
     this.gameActive = true;
     this.gameIdle = false;
-    this.gameOver = false;
+    this.gameOver = false;//reset the game state
   }
+  coinFlip() {
+    return Math.random() > 0.5;
+  }// 50/50 chance to return true or false
 
   update_handleBurgers(time, delta) {
     //burger creation
@@ -123,7 +126,7 @@ class GameScene extends Phaser.Scene {
 
       let randomPosition = this.getRandomPosition(8);
 
-      let burger = new Burger(this, randomPosition.x, randomPosition.y, true);
+      let burger = new Burger(this, randomPosition.x, randomPosition.y, this.coinFlip());
 
       //burger.burgerSprite.setScale(0.10);
 
