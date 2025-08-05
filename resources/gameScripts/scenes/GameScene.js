@@ -40,6 +40,25 @@ class GameScene extends Phaser.Scene {
 
   update(time, delta) {
     if (this.playerHealth > 0) {
+      this.gameActive = true;
+      this.gameOver = false;
+      this.gameIdle = false;
+    } else if (this.playerHealth <= 0 && !this.gameIdle) {
+      this.gameActive = false;
+      this.gameOver = true;
+      this.gameIdle = false;
+    }//toggle the game state based on player health
+
+    if (this.gameOver) {
+      this.endGame();
+
+
+      this.gameActive = false;
+      this.gameOver = false;
+      this.gameIdle = true;
+    }//toggle the game state to idle so that "gameover" only happens once
+
+    if (this.gameActive) {
       this.update_handleBurgers(time, delta);
     } else {
       //when player health reaches 0, delete all burgers and show the scoreboard, the player can then click to restart the game
@@ -76,6 +95,26 @@ class GameScene extends Phaser.Scene {
       this.playerScore += value;
     }
     console.log(`player score: ${this.playerScore}`);//used for debug
+  }
+  endGame() {
+    this.burgers.forEach((object, objectIndex) => {
+      object.burgerSprite.destroy();
+    });//clear all burger sprites
+    this.burgers = [];//empty the array
+    this.scoreBoard.openScoreBoard();//open the scoreboard
+    this.input.on('pointerdown', function (pointer) {
+      this.scoreBoard.hideScoreBoard();
+      this.restartGame();
+    }, this);//when the player clicks, the game starts again
+  }
+  restartGame() {
+    this.playerHealth = 3;
+    this.healthIndicator.setText(this.playerHealth);
+    this.playerScore = 0;
+
+    this.gameActive = true;
+    this.gameIdle = false;
+    this.gameOver = false;
   }
 
   update_handleBurgers(time, delta) {
