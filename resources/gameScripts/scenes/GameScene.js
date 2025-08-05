@@ -98,7 +98,7 @@ class GameScene extends Phaser.Scene {
     } else {
       this.playerScore += value;
     }
-    console.log(`player score: ${this.playerScore}`);//used for debug
+    //console.log(`player score: ${this.playerScore}`);//used for debug
   }
   async endGame() {
     if (!this.gameActive && this.gameIdle) {
@@ -144,7 +144,7 @@ class GameScene extends Phaser.Scene {
       this.burgers.push(burger);
 
     } else {
-      console.log("max number of burgers reached");//used for debugging
+      //console.log("max number of burgers reached");//used for debugging
     }
 
 

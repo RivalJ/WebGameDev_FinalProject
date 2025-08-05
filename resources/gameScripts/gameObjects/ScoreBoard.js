@@ -21,6 +21,8 @@ class ScoreBoard{
     await this.scoreHandler.dbLoaded;//wait for the scorehandler to be ready
     await this.scoreHandler.getScoreList();//wait for our score list to be ready
 
+    //console.log("score board values: ", this.scoreHandler.scoreList);//used for debugging
+
     this.scoreHandler.scoreList.forEach((player, index) => {
       this.drawLeftText(player.name, index);
       this.drawRightText(player.score, index);

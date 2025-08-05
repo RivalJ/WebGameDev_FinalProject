@@ -23,7 +23,9 @@ class ScoreHandler {
     await this.dbLoaded;
     await this.dbInstance.dataReady;
 
-    this.scoreList = this.dbInstance.highScores; //copy the dbInstance of the score list to this class
+    this.scoreList = [...this.dbInstance.highScores]; //copy the dbInstance of the score list to this class
+    console.log(this.dbInstance.highScores);//used for debugging
+
     this.scoreList.sort((a, b) => b.score - a.score);//sort the list in descending order based on score
   }
   async getScoreList() {
