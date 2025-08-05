@@ -102,7 +102,7 @@ class GameScene extends Phaser.Scene {
     });//clear all burger sprites
     this.burgers = [];//empty the array
     this.scoreBoard.openScoreBoard();//open the scoreboard
-    this.input.on('pointerdown', function (pointer) {
+    this.input.once('pointerdown', function (pointer) {
       this.scoreBoard.hideScoreBoard();
       this.restartGame();
     }, this);//when the player clicks, the game starts again
@@ -147,6 +147,7 @@ class GameScene extends Phaser.Scene {
   listener_onClickEvilBurger() {
     this.modifyPlayerScore(-15);
     this.playerHealth--;
+    console.log(this.playerHealth);
     this.healthIndicator.setText(this.playerHealth);
   }
   listener_onClickNormalBurger() {
