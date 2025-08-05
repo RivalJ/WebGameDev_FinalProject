@@ -33,7 +33,7 @@ class Burger extends Phaser.GameObjects.Sprite{
       //someone will need to go in and edit the images to be something like 100 by 100 pixels in size, they should also be PNG images
       this.burgerSprite.displayWidth = 100;
       this.burgerSprite.displayHeight = 100;
-      this.burgerSprite.setScale(4);
+      this.burgerSprite.setScale(6);
     }
 
     update(deltaTime) {
