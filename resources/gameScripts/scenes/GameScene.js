@@ -22,6 +22,7 @@ class GameScene extends Phaser.Scene {
     this.playerScore = 0;
     this.playerHealth = 3;
     this.healthIndicator;
+    this.scoreIndicator;
 
     this.username = window.username;
     // ^^ probs not the best way to do this, but we have deadlines, so if it works it works.
@@ -39,7 +40,11 @@ class GameScene extends Phaser.Scene {
     console.log(this.username);//FIXME: delete when testing is done
     this.playerScore = 0;
 
-    this.healthIndicator = this.add.text(20, 20, this.playerHealth);
+    this.healthIndicator = this.add.text(20, 20, `health: ${this.playerHealth}`);
+    this.healthIndicator.setFontSize(24);
+
+    this.scoreIndicator = this.add.text(this.healthIndicator.x, this.healthIndicator.y * 3, `score: ${this.playerScore}`);
+    this.scoreIndicator.setFontSize(24);
 
     this.events.on("damagePlayer", this.listener_onClickEvilBurger.bind(this));
     this.events.on("increaseScore", this.listener_onClickNormalBurger.bind(this));
@@ -128,7 +133,8 @@ class GameScene extends Phaser.Scene {
   }
   restartGame() {
     this.playerHealth = 3;//reset player health
-    this.healthIndicator.setText(this.playerHealth);//update the indicator
+    this.healthIndicator.setText(`health: ${this.playerHealth}`);//update the indicator
+    this.scoreIndicator.setText(`score: ${this.playerScore}`);//update the score indicator
     this.playerScore = 0;//reset player score
 
     this.gameActive = true;
@@ -173,11 +179,13 @@ class GameScene extends Phaser.Scene {
     this.modifyPlayerScore(-15);
     this.playerHealth--;
     console.log(this.playerHealth);
-    this.healthIndicator.setText(this.playerHealth);
+    this.healthIndicator.setText(`health: ${this.playerHealth}`);
+    this.scoreIndicator.setText(`score: ${this.playerScore}`);
     this.audioHandler.sound_evilSmash.play();
   }
   listener_onClickNormalBurger() {
     this.modifyPlayerScore(15);
+    this.scoreIndicator.setText(`score: ${this.playerScore}`);
     this.audioHandler.sound_smash.play();
   }
 }

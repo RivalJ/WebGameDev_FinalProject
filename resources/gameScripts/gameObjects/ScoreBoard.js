@@ -27,6 +27,7 @@ class ScoreBoard{
       this.drawLeftText(player.name, index);
       this.drawRightText(player.score, index);
     });
+    this.drawLeftText("You lose! Viewing high scores. (Click to try again)", this.scoreHandler.scoreList.length);
   }
   hideScoreBoard() {
     this.background.destroy();
@@ -83,9 +84,20 @@ class ScoreBoard{
     let fontSize = 24;
     let currentTextSpacing = fontSize * (index * (fontSize / 10));
     let stringSizeOffset = text.length * fontSize;//used to set the text to the right of the screen
-    let textObject = this.scene.add.text(this.dimensions.width - stringSizeOffset, currentTextSpacing + fontSize, text);
+    let textObject = this.scene.add.text(this.dimensions.width - stringSizeOffset, currentTextSpacing + fontSize, text); //currentTextSpacing + fontSize
     textObject.setFontSize(fontSize);
     textObject.setColor("#FFFFFF");//make the text white
     this.background.add(textObject);
-  }
+  }//this starts to break once strings get too long, no clue why, not enough time to fix, I tried.
+  drawCenterText(text, index) {
+    text = text.toString();
+    let fontSize = 24;
+    let currentTextSpacing = fontSize * (index * (fontSize / 10));
+    let stringSizeOffset = text.length * fontSize;//used to set the text to the right of the screen
+    let textObject = this.scene.add.text(0, 0, text);
+    textObject.setPosition(this.dimensions.bottomRight.x - textObject.width * 2.5, currentTextSpacing - fontSize * 2);
+    textObject.setFontSize(fontSize);
+    textObject.setColor("#FFFFFF");//make the text white
+    this.background.add(textObject);
+  }//this doesn't work, I have no idea why but don't use it
 }
