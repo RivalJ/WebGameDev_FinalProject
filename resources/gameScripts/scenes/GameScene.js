@@ -17,6 +17,7 @@ class GameScene extends Phaser.Scene {
     super("playGame");
 
     this.scoreBoard = null;
+
     this.burgers = [];
     this.playerScore = 0;
     this.playerHealth = 3;
@@ -31,6 +32,7 @@ class GameScene extends Phaser.Scene {
   }
   preload() {
     this.scoreBoard = new ScoreBoard(this);
+    this.geoLocation = new GeoLocation();
   }
 
   create() {
