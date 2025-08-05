@@ -31,12 +31,14 @@ class Burger extends Phaser.GameObjects.Sprite{
 
       //FIXME: currently the scale is set to 0.1 because otherwise the images are too large
       //someone will need to go in and edit the images to be something like 100 by 100 pixels in size, they should also be PNG images
-      this.burgerSprite.setScale(0.10);
+      this.burgerSprite.displayWidth = 100;
+      this.burgerSprite.displayHeight = 100;
+      this.burgerSprite.setScale(4);
     }
 
     update(deltaTime) {
         if (this.isEvil) {
-            this.evilTimer -= deltaTime / 1000;
+            this.evilTimer -= (deltaTime / 1000);
 
             if (this.evilTimer <= 0) {
                 this.isEvil = false;

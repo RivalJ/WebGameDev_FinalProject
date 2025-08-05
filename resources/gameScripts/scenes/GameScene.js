@@ -43,6 +43,9 @@ class GameScene extends Phaser.Scene {
 
     this.events.on("damagePlayer", this.listener_onClickEvilBurger.bind(this));
     this.events.on("increaseScore", this.listener_onClickNormalBurger.bind(this));
+
+    this.audioHandler = new AudioHandler(this);
+    this.audioHandler.sound_music.play();
   }
 
   update(time, delta) {
@@ -103,6 +106,9 @@ class GameScene extends Phaser.Scene {
     //console.log(`player score: ${this.playerScore}`);//used for debug
   }
   async endGame() {
+    this.audioHandler.sound_music.stop();
+    this.audioHandler.sound_gameOver.play();//stop the music and play the game over sound
+
     if (!this.gameActive && this.gameIdle) {
       this.burgers.forEach((object, objectIndex) => {
         object.burgerSprite.destroy();
@@ -128,6 +134,9 @@ class GameScene extends Phaser.Scene {
     this.gameActive = true;
     this.gameIdle = false;
     this.gameOver = false;//reset the game state
+
+    this.audioHandler.sound_gameOver.stop();
+    this.audioHandler.sound_music.play();//start the music again
   }
   coinFlip() {
     return Math.random() > 0.5;
@@ -165,8 +174,10 @@ class GameScene extends Phaser.Scene {
     this.playerHealth--;
     console.log(this.playerHealth);
     this.healthIndicator.setText(this.playerHealth);
+    this.audioHandler.sound_evilSmash.play();
   }
   listener_onClickNormalBurger() {
     this.modifyPlayerScore(15);
+    this.audioHandler.sound_smash.play();
   }
 }
