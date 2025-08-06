@@ -5,6 +5,8 @@ class LoadingScene extends Phaser.Scene {
   }
   preload() {
     try {
+      // this.load.image("ohioSign", "./resources/assets/ohioSign.png");
+      // this.load.image("kentuckySign", "./resources/assets/kentuckySign.png");
       this.load.image("normalBurger", "./resources/assets/normalBurger.png");
       this.load.image("evilBurger", "./resources/assets/evilBurger.png");
     } catch {

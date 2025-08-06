@@ -4,8 +4,8 @@ const input_username = document.getElementById("username");
 const btn_submitUsername = document.getElementById("username-submit");
 const div_startScreen = document.getElementById("startScreen");
 
-const geoLocation = new GeoLocation();
-geoLocation.getLocation();
+// const geoLocation = new GeoLocation();
+// geoLocation.getLocation();
 //FIXME: get a better reference for how large the game will end up being
 //for now its set to 1280x720
 var config = {
