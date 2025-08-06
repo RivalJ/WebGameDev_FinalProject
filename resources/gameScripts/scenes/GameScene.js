@@ -31,31 +31,19 @@ class GameScene extends Phaser.Scene {
     this.gameOver = false;
     this.gameIdle = false;
   }
+  init(data) {
+    this.playerLocation = data.location;
+  }
+
   preload() {
-    this.load.image("ohioSign", "./resources/assets/ohioSign.png");
-    this.load.image("kentuckySign", "./resources/assets/kentuckySign.png");
     this.scoreBoard = new ScoreBoard(this);
   }
   
-  async create() {
+  create() {
     console.log(this.username);//FIXME: delete when testing is done
     this.playerScore = 0;
-  
-    const geoLocation = new GeoLocation();
 
-    await geoLocation.apiRequest().then((value) => {
-      
-      const gameWidth = this.cameras.main.width;
-      const gameHeight = this.cameras.main.height;
-      
-      if (value == "OH"){
-        this.backgroundImage = this.add.image(gameWidth/2, gameHeight/2, "ohioSign");
-        
-      }
-      else if(value == "KY"){
-        this.add.image("kentuckySign");
-      }
-    });
+    this.create_addBackgroundImage();
     
     this.healthIndicator = this.add.text(20, 20, `health: ${this.playerHealth}`);
     this.healthIndicator.setFontSize(24);
@@ -205,5 +193,16 @@ class GameScene extends Phaser.Scene {
     this.modifyPlayerScore(15);
     this.scoreIndicator.setText(`score: ${this.playerScore}`);
     this.audioHandler.sound_smash.play();
+  }
+
+  create_addBackgroundImage() {
+    if (this.playerLocation == "OH") {
+      const gameWidth = this.cameras.main.width;
+      const gameHeight = this.cameras.main.height;
+      this.backgroundImage = this.add.image(gameWidth / 2, gameHeight / 2, "ohioSign");
+    }
+    else if (this.playerLocation == "KY") {
+      this.add.image("kentuckySign");
+    }//assigns a background image based on the palyers location, data obtained from the loading scene
   }
 }
