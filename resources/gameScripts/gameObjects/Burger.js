@@ -41,8 +41,20 @@ class Burger extends Phaser.GameObjects.Sprite{
             this.evilTimer -= (deltaTime / 1000);
 
             if (this.evilTimer <= 0) {
+              this.isEvil = false;
+              try {//try to change the burger texture
+                if (this.burgerSprite != null) {//make sure the sprite exists
+                  this.burgerSprite.setTexture('normalBurger');//try to change its texture
+                } else {//if it's null for some reason, just delete the object and pretend the player won
+                  this.isEvil = false;
+                  this.onClick();
+                }
+              } catch (error){//if it fails, just delete the object and pretend the player won
                 this.isEvil = false;
-                this.burgerSprite.setTexture('normalBurger');
+                this.onClick();
+                console.error("burger texture could not be changed for some reason!");
+                console.error(error);
+              }
             }
         }
     }
